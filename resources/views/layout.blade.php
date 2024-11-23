@@ -38,7 +38,8 @@
                             </li>
                         </ul>
                         <a href="/auth/signup" class="btn btn-outline-success me-3" role="button">SignUp</a>
-                        <a href="/auth/signin" class="btn btn-outline-success" role="button">SignIn</a>
+                        <a href="/auth/login" class="btn btn-outline-success me-3" role="button">SignIn</a>
+                        <a href="/auth/logout" class="btn btn-outline-success " role="button">Logout</a>
                     </div>
                 </div>
             </nav>

@@ -24,10 +24,12 @@ class CommentController extends Controller
         return redirect()->route('articles.show', $comment->article_id)
         ->with('status', 'Add comment failed');
     }
+
     public function edit($id){
         $comment = Comment::findOrFail($id);
         return view('comments.update', ['comment'=>$comment]);
     }
+
     public function update(Request $request, Comment $comment){
         $request->validate([
             'name'=>'required|min:3',
@@ -39,8 +41,8 @@ class CommentController extends Controller
         if ($comment->save()) return redirect()->route('articles.show', $comment->article_id)
         ->with('status', 'Comment update success');
         return redirect()->back()->with('status', 'Comment update failed');
-        // return redirect()->route('articles.show', ['article'=>$comment->article_id]);
     }
+    
     public function delete($id){
         $comment = Comment::findOrFail($id);
         $comment->delete();
