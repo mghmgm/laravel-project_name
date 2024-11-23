@@ -25,13 +25,20 @@
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                             <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="/articles">Посты</a>
+                            </li>
+                            <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="/articles/create">Создать пост</a>
+                            </li>
+                            <li class="nav-item">
                             <a class="nav-link active" aria-current="page" href="/about">О нас</a>
                             </li>
                             <li class="nav-item">
                             <a class="nav-link" href="/contacts">Контакты</a>
                             </li>
                         </ul>
-                        <a href="/auth/signup" class="btn btn-outline-success" role="button">SignUp</a>
+                        <a href="/auth/signup" class="btn btn-outline-success me-3" role="button">SignUp</a>
+                        <a href="/auth/signin" class="btn btn-outline-success" role="button">SignIn</a>
                     </div>
                 </div>
             </nav>
