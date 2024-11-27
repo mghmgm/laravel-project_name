@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 use App\Models\Comment;
+use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Auth;
 
 use Illuminate\Http\Request;
 
@@ -16,9 +18,8 @@ class CommentController extends Controller
         $comment->name = request('name');
         $comment->desc = request('desc');
         $comment->article_id = request('article_id');
-        $comment->user_id = 1;
+        $comment->user_id = Auth::id();
         $comment->save();
-        // return redirect()->back();
         if ($comment->save()) return redirect()->route('articles.show', $comment->article_id)
             ->with('status', 'Add comment success');
         return redirect()->route('articles.show', $comment->article_id)
@@ -27,10 +28,12 @@ class CommentController extends Controller
 
     public function edit($id){
         $comment = Comment::findOrFail($id);
+        Gate::authorize('update_comment', $comment);
         return view('comments.update', ['comment'=>$comment]);
     }
 
     public function update(Request $request, Comment $comment){
+        Gate::authorize('update_comment', $comment);
         $request->validate([
             'name'=>'required|min:3',
             'desc'=>'required|max:256'
@@ -45,6 +48,7 @@ class CommentController extends Controller
     
     public function delete($id){
         $comment = Comment::findOrFail($id);
+        Gate::authorize('update_comment', $comment);
         $comment->delete();
         return redirect()->route('articles.show', ['article'=>$comment->article_id])
         ->with('status','Delete success');

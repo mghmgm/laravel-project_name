@@ -37,10 +37,14 @@
                             <a class="nav-link" href="/contacts">Контакты</a>
                             </li>
                         </ul>
-                        <a href="/auth/signup" class="btn btn-outline-success me-3" role="button">SignUp</a>
-                        <a href="/auth/login" class="btn btn-outline-success me-3" role="button">SignIn</a>
-                        <a href="/auth/logout" class="btn btn-outline-success " role="button">Logout</a>
-                    </div>
+                        @guest
+                            <a href="/auth/signup" class="btn btn-outline-success me-3" role="button">SignUp</a>
+                            <a href="/auth/login" class="btn btn-outline-success me-3" role="button">SignIn</a>
+                        @endguest
+                        @auth
+                            <a href="/auth/logout" class="btn btn-outline-success " role="button">Logout</a>
+                        @endauth
+                        </div>
                 </div>
             </nav>
         </header>

@@ -10,7 +10,10 @@ class DatabaseSeeder extends Seeder
 {
     public function run(): void
     {
-        $this->call(ArticleSeeder::class);
-        Article::factory(10)->has(Comment::factory(3))->create();
+        $this->call(
+            // ArticleSeeder::class,
+            UserSeeder::class,
+        );
+        // Article::factory(10)->has(Comment::factory(3))->create();
     }
 }
