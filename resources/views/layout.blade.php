@@ -27,9 +27,14 @@
                             <li class="nav-item">
                             <a class="nav-link active" aria-current="page" href="/articles">Посты</a>
                             </li>
+                            @can('update')
                             <li class="nav-item">
                             <a class="nav-link active" aria-current="page" href="/articles/create">Создать пост</a>
                             </li>
+                            <li class="nav-item">
+                                <a class="nav-link active" aria-current="page" href="/comment/index">All comments</a>
+                            </li>
+                            @endcan
                             <li class="nav-item">
                             <a class="nav-link active" aria-current="page" href="/about">О нас</a>
                             </li>

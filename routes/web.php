@@ -15,11 +15,6 @@ Route::get('/auth/logout', [AuthController::class, 'logout']);
 
 //Article
 Route::resource('/articles', ArticleController::class)->middleware('auth:sanctum');
-Route::get('/articles/{id}', [ArticleController::class, 'show']);
-Route::post('/comment', [CommentController::class, 'store']);
-Route::get('/comment/{id}/edit', [CommentController::class, 'edit']);
-Route::post('/comment/{comment}/update', [CommentController::class, 'update']);
-Route::get('/comment/{id}/delete', [CommentController::class, 'delete']);
 
 //Comments
 Route::controller(CommentController::class)->prefix('/comment')->middleware('auth:sanctum')->group(function () {
@@ -27,6 +22,9 @@ Route::controller(CommentController::class)->prefix('/comment')->middleware('aut
     Route::get('/{id}/edit', 'edit');
     Route::post('/{comment}/update', 'update');
     Route::get('/{comment}/delete', 'destroy');
+    Route::get('/index', 'index')->name('comment.index');
+    Route::get('/{comment}/accept', 'accept');
+    Route::get('/{comment}/reject', 'accept');
 });
 
 //Home

@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use App\Models\Comment;
 use App\Models\User;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Gate;
+use App\Events\NewArticleEvent;
 
 class ArticleController extends Controller
 {
@@ -24,6 +26,7 @@ class ArticleController extends Controller
 
     public function store(Request $request)
     {
+        Gate::authorize('create', self::class);
         $request->validate([
             'date'=>'date',
             'name'=>'required|min:5|max:100',
@@ -34,13 +37,17 @@ class ArticleController extends Controller
         $article->name = $request->name;
         $article->desc = $request->desc;
         $article->user_id = 1;
-        $article->save();
-        return redirect('/article');
+        if ($article->save()) {
+            NewArticleEvent::dispatch($article);
+        };
+        return redirect('/articles');
     }
 
     public function show(Article $article)
     {
-        $comments = Comment::where('article_id', $article->id)->get();
+        $comments = Comment::where('article_id', $article->id)
+            ->where('accept', true)
+            ->get();
         $user = User::findOrFail($article->user_id);
         return view('articles.show', ['article'=>$article, 'user'=>$user, 'comments'=>$comments]);
     }
@@ -52,6 +59,7 @@ class ArticleController extends Controller
 
     public function update(Request $request, Article $article)
     {
+        Gate::authorize('update', $article);
         $request->validate([
             'name'=>'required|min:6',
             'desc'=>'required|max:256'
@@ -67,7 +75,8 @@ class ArticleController extends Controller
 
     public function destroy(Article $article)
     {
+        Gate::authorize('delete', $article);
         $article->delete();
-        return redirect('/article');
+        return redirect('/articles');
     }
 }
