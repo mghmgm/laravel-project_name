@@ -6,7 +6,7 @@
   @endforeach
 @endif
 
-<form action="/articles" method="POST">
+<form action="/articles/{{ $article->id }}" method="POST">
   @csrf
   @method('PUT')
   <div class="mb-3">

@@ -17,15 +17,10 @@ class NewArticleEvent implements ShouldBroadcast
 
     public function __construct(public Article $article){}
 
-    /**
-     * Get the channels the event should broadcast on.
-     *
-     * @return array<int, \Illuminate\Broadcasting\Channel>
-     */
     public function broadcastOn(): array
     {
         return [
-            new PrivateChannel('test'),
+            new Channel('test'),
         ];
     }
 
