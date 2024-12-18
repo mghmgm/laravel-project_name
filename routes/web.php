@@ -15,6 +15,7 @@ Route::get('/auth/logout', [AuthController::class, 'logout']);
 
 //Article
 Route::resource('/articles', ArticleController::class)->middleware('auth:sanctum');
+Route::get('/articles/{article}', [ArticleController::class, 'show'])->name('articles.show')->middleware('saveclick');
 
 //Comments
 Route::controller(CommentController::class)->prefix('/comment')->middleware('auth:sanctum')->group(function () {
@@ -24,7 +25,7 @@ Route::controller(CommentController::class)->prefix('/comment')->middleware('aut
     Route::get('/{comment}/delete', 'destroy');
     Route::get('/index', 'index')->name('comment.index');
     Route::get('/{comment}/accept', 'accept');
-    Route::get('/{comment}/reject', 'accept');
+    Route::get('/{comment}/reject', 'reject');
 });
 
 //Home

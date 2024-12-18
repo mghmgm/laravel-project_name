@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\APIControllers;
 
 use App\Models\Article;
 use Illuminate\Http\Request;
@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 use App\Events\NewArticleEvent;
+use App\Http\Controllers\Controller;
 
 class ArticleController extends Controller
 {
@@ -21,12 +22,12 @@ class ArticleController extends Controller
         $articles = Cache::remember('articles'.$page, 3000, function() {
             return Article::latest()->paginate(6);
         });
-        return view('articles.index', ['articles'=>$articles]);
+        return response()->json($articles);
     }
 
     public function create()
     {
-        return view('articles.create');
+        // return view('articles.create');
     }
 
     public function store(Request $request)
@@ -48,8 +49,9 @@ class ArticleController extends Controller
         $article->user_id = 1;
         if ($article->save()) {
             NewArticleEvent::dispatch($article);
+            return response(1, 200);
         };
-        return redirect('/articles');
+        return response(0, 507);
     }
 
     public function show(Article $article)
@@ -65,12 +67,17 @@ class ArticleController extends Controller
                         'user'=>$user
                     ];
                 });
-        return view('articles.show', ['article'=>$article, 'user'=>$result['user'], 'comments'=>$result['comments']]);
-    }
+        return response()->json(
+                ['article'=>$article, 
+                'user'=>$result['user'], 
+                'comments'=>$result['comments']
+                ]
+            );   
+        }
 
     public function edit(Article $article)
     {
-        return view('articles.update', ['article' => $article]);
+        return response()->json($articles);
     }
 
     public function update(Request $request, Article $article)
@@ -88,15 +95,17 @@ class ArticleController extends Controller
         $article->name = request('name');
         $article->desc = request('desc');
         $article->user_id = 1;
-        $article->save();
-        return redirect()->route('articles.index');
+        if ($article->save())
+            return response(1, 200);
+        else return response(1, 507);
     }
 
     public function destroy(Article $article)
     {
         Cache::flush();
         Gate::authorize('delete', $article);
-        $article->delete();
-        return redirect('/articles');
+        if ($article->delete())
+            return response(1, 200)->with('status', 'Delete success');
+        else return response(1, 507)->with('status', 'Delete don`t success');
     }
 }

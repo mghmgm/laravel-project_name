@@ -27,21 +27,21 @@
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                             <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="/articles">Посты</a>
+                            <a class="nav-link @active('articles')" aria-current="page" href="/articles">Посты</a>
                             </li>
                             @can('update')
                             <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="/articles/create">Создать пост</a>
+                            <a class="nav-link  @active('articles/create')" aria-current="page" href="/articles/create">Создать пост</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link active" aria-current="page" href="/comment/index">All comments</a>
+                                <a class="nav-link @active('comment/index')" aria-current="page" href="/comment/index">All comments</a>
                             </li>
                             @endcan
                             <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="/about">О нас</a>
+                            <a class="nav-link @active('about')" aria-current="page" href="/about">О нас</a>
                             </li>
                             <li class="nav-item">
-                            <a class="nav-link" href="/contacts">Контакты</a>
+                            <a class="nav-link @active('contacts')" href="/contacts">Контакты</a>
                             </li>
                             @auth
                             <li class="nav-item dropdown">
@@ -50,7 +50,7 @@
                                 </a>
                                 <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                                     @foreach(auth()->user()->unreadNotifications as $notification)
-                                    <li><a class="dropdown-item" href="{{route('articles.show', ['article'=>$notification->data['article']['id'], 'notify'=>$notification->id])}}">{{$notification->data['article']['name']}}</a></li>
+                                    <li><a class="dropdown-item" href="{{route('articles.show', ['article'=>$notification->data['article']['id'], 'notify'=>$notification->id])}}">{{$notification->data['article']['name']}}: {{$notification->data['comment_name']}}</a></li>
                                     @endforeach
                                 </ul>
                             </li>

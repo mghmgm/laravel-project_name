@@ -21,7 +21,7 @@
     @foreach($comments as $comment)
     <tr>
       <th scope="row">{{$comment->created_at}}</th>
-      <td><a href="/article/{{ $comment->article_id }}">{{Article::findOrFail($comment->article_id)->name}}</a></td>
+      <td><a href="/articles/{{ $comment->article_id }}">{{Article::findOrFail($comment->article_id)->name}}</a></td>
       <td>{{$comment->desc}}</td>
       <td>{{ User::findOrFail($comment->user_id)->name }}</td>
       <td class="text-center">

@@ -1,6 +1,6 @@
 <template>
     <div v-if="msg != null" class="alert alert-success" role="alert">
-        Добавлена новая статья <strong><a :href="`/article/${msg.id}`">{{ msg.name }}</a></strong>
+        Добавлена новая статья <strong><a :href="`/articles/${msg.id}`">{{ msg.name }}</a></strong>
     </div>
 </template>
 

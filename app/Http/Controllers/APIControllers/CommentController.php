@@ -1,6 +1,7 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\APIControllers;
+
 use App\Models\Comment;
 use App\Models\Article;
 use App\Models\User;
@@ -11,6 +12,7 @@ use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 use App\Jobs\VeryLongJob;
 use App\Notifications\NewCommentNotify;
+use App\Http\Controllers\Controller;
 
 use Illuminate\Http\Request;
 
